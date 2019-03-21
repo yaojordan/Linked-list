@@ -6,36 +6,34 @@ typedef struct listNode {
 	struct listNode *nextPtr;
 }Node;
 
+void insertNode(Node *headPtr, int newVal);
+void deleteNode(Node *headPtr, int delVal);
 void printList(Node *headPtr);
 int main(void)
 {
-	int val;
+	int val, num;
 	int count = 5;
 
 	Node *head = (Node*)malloc(sizeof(Node));
-
-	printf("Insert first node number: ");
-	scanf_s("%d", &val);
-
-	head->data = val;
+	head->data = 0;
 	head->nextPtr = NULL;
 
-	Node *currentNode = head;
+	printf("Insert  number of nodes: ");
+	scanf_s("%d", &num);
 
-	for(int i=0; i<count; i++)
+	for (int i = 0; i < num; i++) 
 	{
-		currentNode->nextPtr = (Node*)malloc(sizeof(Node));
-		currentNode = currentNode->nextPtr;
-		
-		printf("Insert %d node number: ", i+1);
+		printf("Insert  node number: ");
 		scanf_s("%d", &val);
-
-		currentNode->data = val;
-		currentNode->nextPtr = NULL;
+		insertNode(head, val);
+		printList(head); //print from head
 	}
 	
-	printList(head);
+	printf("Insert delete number: ");
+	scanf_s("%d", &val);
 
+	deleteNode(head, val);
+	printList(head); //print from head
 	system("pause");
 	return 0;
 }
@@ -47,4 +45,57 @@ void printList(Node *headPtr)
 		printf("%d -> ", currentNode->data);
 		currentNode = currentNode->nextPtr;
 	}
+}
+void deleteNode(Node *headPtr, int delVal)
+{
+	Node *currentNode;
+	Node *previousNode;
+
+	currentNode = headPtr;
+	previousNode = NULL;
+	if (headPtr == NULL)
+	{
+		printf("First Node not found");
+	}
+
+	if (delVal == headPtr->data) //Delete if first node is
+	{
+		headPtr = headPtr->nextPtr;
+		free(currentNode);
+		currentNode = headPtr;
+	}
+
+	while (currentNode != NULL && delVal != currentNode->data)
+	{
+		previousNode = currentNode;
+		currentNode = currentNode->nextPtr;
+	}
+
+	if (currentNode == NULL)
+	{
+		printf("Value not found");
+	}
+	else
+	{
+		previousNode->nextPtr = currentNode->nextPtr;
+		free(currentNode);
+	}
+
+}
+void insertNode(Node *headPtr, int newVal)
+{
+	Node *currentNode;
+	Node *newNode = (Node*)malloc(sizeof(Node)); //malloc return void *, so we need to cast type to Node *
+
+	currentNode = headPtr;
+
+	newNode->data = newVal;
+	newNode->nextPtr = NULL;
+
+	while (currentNode->nextPtr != NULL) {
+	currentNode = currentNode->nextPtr;
+}
+	currentNode->nextPtr = newNode;
+	currentNode = currentNode->nextPtr;
+	//currentNode = newNode; why this can't?
 }
