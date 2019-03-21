@@ -92,10 +92,11 @@ void insertNode(Node *headPtr, int newVal)
 	newNode->data = newVal;
 	newNode->nextPtr = NULL;
 
-	while (currentNode->nextPtr != NULL) {
-	currentNode = currentNode->nextPtr;
-}
+	while (currentNode->nextPtr != NULL) 
+	{
+		currentNode = currentNode->nextPtr;
+	}
 	currentNode->nextPtr = newNode;
 	currentNode = currentNode->nextPtr;
-	//currentNode = newNode; why this can't?
+	
 }
